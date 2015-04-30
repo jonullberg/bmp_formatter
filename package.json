@@ -1,0 +1,19 @@
+{
+  "name": "bmp_formatter",
+  "version": "0.1.0",
+  "description": "a bmp formatter using node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonullberg/bmp_formatter.git"
+  },
+  "author": "jonathan.ullberg@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jonullberg/bmp_formatter/issues"
+  },
+  "homepage": "https://github.com/jonullberg/bmp_formatter#readme"
+}
