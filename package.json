@@ -15,5 +15,12 @@
   "bugs": {
     "url": "https://github.com/jonullberg/bmp_formatter/issues"
   },
-  "homepage": "https://github.com/jonullberg/bmp_formatter#readme"
+  "homepage": "https://github.com/jonullberg/bmp_formatter#readme",
+  "devDependencies": {
+    "chai": "^2.3.0",
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-jshint": "^0.11.2",
+    "mocha": "^2.2.4"
+  }
 }
