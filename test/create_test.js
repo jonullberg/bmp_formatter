@@ -13,18 +13,7 @@ describe('Create.js', function() {
         bfSize: 1266,
         bfReserved1: 0,
         bfReserved2: 0,
-        bfOffBits: 1146
-      };
-      fs.readFile(path, function(err, data) {
-        if (err) throw err;
-        expect(create.createFileHeader(data)).to.eql(expectObject);
-      });
-    });
-  });
-
-  describe('DIB Header Info', function() {
-    it('Should create DIB header', function() {
-      var expectObject = {
+        bfOffBits: 1146,
         biteSize: 108,
         biteWidth: 10,
         biteHeight: 10,
@@ -39,8 +28,7 @@ describe('Create.js', function() {
       };
       fs.readFile(path, function(err, data) {
         if (err) throw err;
-        var bmp = create.createFileHeader(data);
-        expect(create.createInfoHeader(bmp, data)).to.eql(expectObject);
+        expect(create.createHeader(data)).to.eql(expectObject);
       });
     });
   });
@@ -307,8 +295,7 @@ describe('Create.js', function() {
      ];
       fs.readFile(path, function(err, data) {
         if (err) throw err;
-        var bmp = create.createFileHeader(data);
-        bmp = create.createInfoHeader(bmp, data);
+        var bmp = create.createHeader(data);
         expect(create.createColorData(bmp, data)).to.eql(expectObject);
       });
     });
@@ -360,8 +347,7 @@ describe('Create.js', function() {
       ];
       fs.readFile(path, function(err, data) {
         if (err) throw err;
-        var bmp = create.createFileHeader(data);
-        bmp = create.createInfoHeader(bmp, data);
+        var bmp = create.createHeader(data);
         expect(create.createPixelData(bmp, data)).to.eql(expectObject);
       });
     });
