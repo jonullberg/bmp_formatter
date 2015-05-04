@@ -3,8 +3,10 @@
 'use strict';
 
 var fs = require('fs');
-var create = require('./lib/create');
-var change = require('./lib/change');
+var Create = require('./lib/create');
+var create = new Create();
+var Change = require('./lib/change');
+var change = new Change();
 var path = process.argv[2];
 var color = process.argv[3].toLowerCase();
 fs.readFile(path, function(err, data) {
