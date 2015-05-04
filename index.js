@@ -5,7 +5,6 @@ var create = require('./lib/create');
 var change = require('./lib/change');
 var path = process.argv[2];
 var color = process.argv[3].toLowerCase();
-
 fs.readFile(path, function(err, data) {
 	if (err) console.log(err);
 	var i = 0;
@@ -31,11 +30,6 @@ fs.readFile(path, function(err, data) {
 	}
 	bitmap = create.createFileHeader(data);
 	bitmap = create.createInfoHeader(bitmap, data);
-	// if(bitmap.infoHeader.biteSize === (12 || 64)) {
-	// 	var startPoint = 78;
-	// } else {
-	// 	startPoint = 54;
-	// }
 	if(bitmap.infoHeader.biteBitCount <= 8) {
 		bitmap = create.createColorData(bitmap, data);
 		change.changePaletteValue(newBuffer, bitmap.colorTable, color, 255, startPoint);
