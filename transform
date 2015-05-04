@@ -33,7 +33,9 @@ fs.readFile(path, function(err, data) {
 			break;
 	}
 	bitmap = create.createHeader(data);
-	console.log(bitmap);
+	// Decides if bits per pixel is eql to or greater than 8,
+	// If it does, it will use a palette
+	// If it doesn't, it will not have a palette
 	if(bitmap.header.pixelDepth <= 8) {
 		bitmap = create.createColorData(bitmap, data);
 		change.changePaletteValue(newBuffer, bitmap.colorTable, color, 255, startPoint);
@@ -41,7 +43,6 @@ fs.readFile(path, function(err, data) {
 		bitmap = create.createPixelData(bitmap, data);
 		change.changePixelValue(newBuffer, bitmap.pixelData, color, 255, startPoint);
 	}
-	console.log(bitmap);
 
 
 	fs.writeFile('./tmp/new1.bmp', newBuffer, function(err) {
