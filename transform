@@ -29,18 +29,19 @@ fs.readFile(path, function(err, data) {
 			startPoint = 56;
 			break;
 		default:
-			console.log('You did not enter a valid color choice, \n Please choose either r(ed), g(reen), or b(lue)');
+			console.log('You did not enter a valid color choice,\nPlease choose either r(ed), g(reen), or b(lue)');
 			break;
 	}
-	bitmap = create.createFileHeader(data);
-	bitmap = create.createInfoHeader(bitmap, data);
-	if(bitmap.infoHeader.biteBitCount <= 8) {
+	bitmap = create.createHeader(data);
+	console.log(bitmap);
+	if(bitmap.header.pixelDepth <= 8) {
 		bitmap = create.createColorData(bitmap, data);
 		change.changePaletteValue(newBuffer, bitmap.colorTable, color, 255, startPoint);
 	} else {
 		bitmap = create.createPixelData(bitmap, data);
 		change.changePixelValue(newBuffer, bitmap.pixelData, color, 255, startPoint);
 	}
+	console.log(bitmap);
 
 
 	fs.writeFile('./tmp/new1.bmp', newBuffer, function(err) {
