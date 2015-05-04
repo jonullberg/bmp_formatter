@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 'use strict';
 
 var fs = require('fs');
@@ -12,7 +14,7 @@ fs.readFile(path, function(err, data) {
 	var startPoint = 0;
 	var newBuffer = new Buffer(data);
 	switch(color) {
-		case 'b': 
+		case 'b':
 		case 'blue':
 			startPoint = 54;
 			break;
