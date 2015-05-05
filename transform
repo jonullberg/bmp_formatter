@@ -8,44 +8,49 @@ var create = new Create();
 var Change = require('./lib/change');
 var change = new Change();
 var path = process.argv[2];
-var color = process.argv[3].toLowerCase();
 fs.readFile(path, function(err, data) {
 	if (err) console.log(err);
 	var i = 0;
 	var bitmap = {};
-	var startPoint = 0;
-	var newBuffer = new Buffer(data);
-	switch(color) {
-		case 'b':
-		case 'blue':
-			startPoint = 54;
-			break;
-		case 'g':
-		case 'green':
-			startPoint = 55;
-			break;
-		case 'r':
-		case 'red':
-			startPoint = 56;
-			break;
-		default:
-			console.log('You did not enter a valid color choice,\nPlease choose either r(ed), g(reen), or b(lue)');
-			break;
-	}
-	bitmap = create.createHeader(data);
-	// Decides if bits per pixel is eql to or greater than 8,
-	// If it does, it will use a palette
-	// If it doesn't, it will not have a palette
-	if(bitmap.header.pixelDepth <= 8) {
-		bitmap = create.createColorData(bitmap, data);
-		change.changePaletteValue(newBuffer, bitmap.colorTable, color, 255, startPoint);
-	} else {
-		bitmap = create.createPixelData(bitmap, data);
-		change.changePixelValue(newBuffer, bitmap.pixelData, color, 255, startPoint);
-	}
+	create.createHeader(data, bitmap, function(bitmap, data) {
+		var color = process.argv[3].toLowerCase();
+		var startPoint = 0;
+		var newBuffer = new Buffer(data);
+		switch(color) {
+			case 'b':
+			case 'blue':
+				startPoint = 54;
+				break;
+			case 'g':
+			case 'green':
+				startPoint = 55;
+				break;
+			case 'r':
+			case 'red':
+				startPoint = 56;
+				break;
+			default:
+				console.log('You did not enter a valid color choice,\nPlease choose either r(ed), g(reen), or b(lue)');
+				break;
+		}
 
+		if(bitmap.header.pixelDepth <= 8) {
+			create.createColorData(bitmap, data);
+			change.changePaletteValue(newBuffer, bitmap.colorTable, color, 255, startPoint, function(err, data) {
+				fs.writeFile('./tmp/new.bmp', newBuffer, function(err) {
+					if(err) console.log(err);
+				});
 
-	fs.writeFile('./tmp/new1.bmp', newBuffer, function(err) {
-		if(err) console.log(err);
+			});
+		} else {
+			create.createPixelData(bitmap, data);
+			change.changePixelValue(newBuffer, bitmap.pixelData, color, 255, startPoint, function(err, data) {
+				fs.writeFile('./tmp/new1.bmp', newBuffer, function(err) {
+					if(err) console.log(err);
+				});
+
+			});
+		}
 	});
+
 });
